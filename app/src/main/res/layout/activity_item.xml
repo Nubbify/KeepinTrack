@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemActivity">
+
+    <ImageView
+        android:id="@+id/iv_item_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_update_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/picture_frame" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="202dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <Button
+            android:id="@+id/btn_update_price"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_item_price"
+            android:layout_alignTop="@+id/tv_item_price"
+            android:layout_toEndOf="@+id/tv_item_price"
+            android:layout_alignParentEnd="true"
+            android:text="@string/button_edit_item_price" />
+
+        <Button
+            android:id="@+id/btn_update_quantity"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_item_name"
+            android:layout_toEndOf="@+id/tv_item_quantity"
+            android:text="@string/button_edit_item_quantity" />
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="228dp"
+            android:layout_height="47dp"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/tv_item_price"
+            android:layout_width="228dp"
+            android:layout_height="47dp"
+            android:layout_below="@+id/tv_item_quantity" />
+
+        <TextView
+            android:id="@+id/tv_item_quantity"
+            android:layout_width="71dp"
+            android:layout_height="47dp"
+            android:layout_below="@+id/tv_item_name" />
+
+        <Button
+            android:id="@+id/btn_update_name"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_item_name"
+            android:text="@string/button_edit_item_name"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/btn_delete_item"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@+id/btn_update_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/button_delete_item" />
+
+        <Button
+            android:id="@+id/btn_order_item"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_update_name"
+            android:layout_toEndOf="@+id/tv_item_name"
+            android:text="@string/button_order_item"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_update_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/button_edit_item_picture"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
