@@ -122,7 +122,19 @@ public class ItemProvider extends ContentProvider{
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int match = sUriMatcher.match(uri);
+        switch (match) {
+            case ITEMS:
+                return database.delete(ItemEntry.TABLE_NAME, selection, selectionArgs);
+            case ITEM_ID:
+                selection = ItemEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                return database.delete(ItemEntry.TABLE_NAME, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Deletion isn't supported for " + uri);
+        }
     }
 
     @Override
