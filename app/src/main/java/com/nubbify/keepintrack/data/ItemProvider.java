@@ -97,24 +97,13 @@ public class ItemProvider extends ContentProvider{
         }
     }
 
-    private Uri insertItem(Uri uri, ContentValues values) {
-        //Here we check our inputs to make sure they're valid.
-        String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
-        if (name == null) {
-            throw new IllegalArgumentException("Item requires a name");
+    private Uri insertItem(Uri uri, ContentValues values) throws IllegalArgumentException {
+        try {
+            checkValues(values);
+        } catch (IllegalArgumentException e) {
+            Log.e(LOG_TAG, "Value check failed: " + e.getMessage());
+            return null;
         }
-
-        int quantity = values.getAsInteger(ItemEntry.COLUMN_ITEM_QUANTITY);
-        if (!ItemEntry.isValidQuantity(quantity)) {
-            throw new IllegalArgumentException("Can't have negative amounts of an item");
-        }
-
-        double price = values.getAsDouble(ItemEntry.COLUMN_ITEM_PRICE);
-        if (!ItemEntry.isValidPrice(price)) {
-            throw new IllegalArgumentException("Can't have a negative price");
-        }
-
-
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -136,5 +125,22 @@ public class ItemProvider extends ContentProvider{
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         return 0;
+    }
+
+    private void checkValues (ContentValues values) throws IllegalArgumentException {
+        String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
+        if (name == null) {
+            throw new IllegalArgumentException("Item requires a name");
+        }
+
+        int quantity = values.getAsInteger(ItemEntry.COLUMN_ITEM_QUANTITY);
+        if (!ItemEntry.isValidQuantity(quantity)) {
+            throw new IllegalArgumentException("Can't have negative amounts of an item");
+        }
+
+        double price = values.getAsDouble(ItemEntry.COLUMN_ITEM_PRICE);
+        if (!ItemEntry.isValidPrice(price)) {
+            throw new IllegalArgumentException("Can't have a negative price");
+        }
     }
 }
