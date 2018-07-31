@@ -15,8 +15,11 @@ import android.util.Log;
 import com.nubbify.keepintrack.data.ItemContract.ItemEntry;
 
 public class ItemProvider extends ContentProvider{
-
+    /** Log tag for debugging */
     public static final String LOG_TAG = ItemProvider.class.getSimpleName();
+
+    private static final int CREATE_CHECK = 1001;
+    private static final int UPDATE_CHECK = 1002;
 
     /** URI matcher code for the content URI to the item table */
     private static final int ITEMS = 100;
@@ -99,7 +102,7 @@ public class ItemProvider extends ContentProvider{
 
     private Uri insertItem(Uri uri, ContentValues values) throws IllegalArgumentException {
         try {
-            checkValues(values);
+            checkValues(values, CREATE_CHECK);
         } catch (IllegalArgumentException e) {
             Log.e(LOG_TAG, "Value check failed: " + e.getMessage());
             return null;
@@ -124,23 +127,81 @@ public class ItemProvider extends ContentProvider{
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case ITEMS:
+                return updateItem(uri, values, selection, selectionArgs);
+            case ITEM_ID:
+                selection = ItemEntry._ID + "=?";
+                selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
+                return updateItem(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
     }
 
-    private void checkValues (ContentValues values) throws IllegalArgumentException {
-        String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
-        if (name == null) {
-            throw new IllegalArgumentException("Item requires a name");
+    private int updateItem(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        try {
+            checkValues(values, UPDATE_CHECK);
+        } catch (IllegalArgumentException e) {
+            Log.e(LOG_TAG, "Value check failed: " + e.getMessage());
         }
 
-        int quantity = values.getAsInteger(ItemEntry.COLUMN_ITEM_QUANTITY);
-        if (!ItemEntry.isValidQuantity(quantity)) {
-            throw new IllegalArgumentException("Can't have negative amounts of an item");
-        }
+        if (values.size() == 0)
+            return 0;
 
-        double price = values.getAsDouble(ItemEntry.COLUMN_ITEM_PRICE);
-        if (!ItemEntry.isValidPrice(price)) {
-            throw new IllegalArgumentException("Can't have a negative price");
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        return database.update(ItemEntry.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    private void checkValues (ContentValues values, int type) throws IllegalArgumentException {
+        switch (type){
+            //When creating an item, we want all values to be valid.
+            case CREATE_CHECK: {
+                String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
+                if (name == null) {
+                    throw new IllegalArgumentException("Item requires a name");
+                }
+
+                int quantity = values.getAsInteger(ItemEntry.COLUMN_ITEM_QUANTITY);
+                if (!ItemEntry.isValidQuantity(quantity)) {
+                    throw new IllegalArgumentException("Can't have negative amounts of an item");
+                }
+
+                double price = values.getAsDouble(ItemEntry.COLUMN_ITEM_PRICE);
+                if (!ItemEntry.isValidPrice(price)) {
+                    throw new IllegalArgumentException("Can't have a negative price");
+                }
+            }
+
+            //When updating, we don't require all content values to be filled. Thus we only check
+            //the content values that are present.
+            case UPDATE_CHECK: {
+                if (values.containsKey(ItemEntry.COLUMN_ITEM_NAME)) {
+                    String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
+                    if (name == null) {
+                        throw new IllegalArgumentException("Item requires a name");
+                    }
+                }
+
+                if (values.containsKey(ItemEntry.COLUMN_ITEM_QUANTITY)) {
+                    int quantity = values.getAsInteger(ItemEntry.COLUMN_ITEM_QUANTITY);
+                    if (!ItemEntry.isValidQuantity(quantity)) {
+                        throw new IllegalArgumentException("Can't have negative amounts of an item");
+                    }
+                }
+
+                if (values.containsKey(ItemEntry.COLUMN_ITEM_PRICE)) {
+                    double price = values.getAsDouble(ItemEntry.COLUMN_ITEM_PRICE);
+                    if (!ItemEntry.isValidPrice(price)) {
+                        throw new IllegalArgumentException("Can't have a negative price");
+                    }
+                }
+            }
+
+            default:
+                throw new IllegalArgumentException("Type for checkValues is invalid");
         }
     }
 }
