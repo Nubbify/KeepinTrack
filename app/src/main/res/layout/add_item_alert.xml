@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/add_item_text_price"
-        android:inputType="number"
+        android:inputType="number|numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_add_item_name" />
 
