@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -124,6 +125,8 @@ public class ItemProvider extends ContentProvider{
             return null;
         }
 
+        getContext().getContentResolver().notifyChange(uri, null);
+
         return ContentUris.withAppendedId(uri, id);
 
     }
@@ -172,7 +175,13 @@ public class ItemProvider extends ContentProvider{
             return 0;
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
-        return database.update(ItemEntry.TABLE_NAME, values, selection, selectionArgs);
+        int rowsUpdated = database.update(ItemEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsUpdated;
     }
 
     private void checkValues (ContentValues values, int type) throws IllegalArgumentException {
@@ -193,8 +202,8 @@ public class ItemProvider extends ContentProvider{
                 if (!ItemEntry.isValidPrice(price)) {
                     throw new IllegalArgumentException("Can't have a negative price");
                 }
+                return;
             }
-
             //When updating, we don't require all content values to be filled. Thus we only check
             //the content values that are present.
             case UPDATE_CHECK: {
@@ -218,6 +227,7 @@ public class ItemProvider extends ContentProvider{
                         throw new IllegalArgumentException("Can't have a negative price");
                     }
                 }
+                return;
             }
 
             default:

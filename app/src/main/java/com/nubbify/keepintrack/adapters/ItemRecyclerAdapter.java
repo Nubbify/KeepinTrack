@@ -40,4 +40,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     public int getItemCount() {
         return mItemCursorAdapter.getCount();
     }
+
+    public void notifyInternalAdapter() {
+        mItemCursorAdapter.notifyDataSetChanged();
+    }
 }
