@@ -1,11 +1,27 @@
 <resources>
     <string name="app_name">Keepin Track</string>
     <string name="settings">Settings</string>
-    <string name="database_empty">Looks like there's nothing here. Click the Plus on the bottom right to get started.</string>
+    <string name="database_empty">Looks like there\'s nothing here. Click the Plus on the bottom right to get started.</string>
     <string name="button_edit_item_name">Change Name</string>
     <string name="button_edit_item_quantity">Modify Quantity</string>
     <string name="button_edit_item_price">Modify Price</string>
     <string name="button_edit_item_picture">New Picture</string>
     <string name="button_delete_item">Remove Item</string>
     <string name="button_order_item">Order Item</string>
+
+    <!-- These strings are used for the alert dialog when adding items, and related toasts -->
+    <string name="add_item_text_name">Item Name</string>
+    <string name="add_item_text_quantity">Item Quantity</string>
+    <string name="add_item_text_price">Item Price</string>
+    <string name="button_add_item">Add Item</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_item_insert_failed">Item insertion failed</string>
+    <string name="add_item_insert_success">Item successfully added</string>
+    <string name="button_sale">Sale</string>
+    <string name="error_fill_item_fields">Item not added: please fill in all fields</string>
+    <string name="error_add_item">Adding item failed:</string>
+    <string name="item_count_remaining">\ left</string>
+    <string name="currency_symbol">$</string>
+    <string name="add_item_dialog_title">Add a new Item</string>
+    <!-- These strings are used for the alert dialog when adding items, and related toasts -->
 </resources>
