@@ -20,8 +20,8 @@
     <string name="button_sale">Sale</string>
     <string name="error_fill_item_fields">Item not added: please fill in all fields</string>
     <string name="error_add_item">Adding item failed:</string>
-    <string name="item_count_remaining">\ left</string>
-    <string name="currency_symbol">$</string>
+    <string name="item_count_remaining">%1$d left</string>
+    <string name="currency_symbol">$%1$s</string>
     <string name="add_item_dialog_title">Add a new Item</string>
     <!-- These strings are used for the alert dialog when adding items, and related toasts -->
 </resources>

@@ -43,8 +43,8 @@ public class ItemCursorAdapter extends CursorAdapter {
         int priceColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_PRICE);
 
         final String itemName = cursor.getString(nameColumnIndex);
-        final String itemPrice = context.getString(R.string.currency_symbol) + String.format(Locale.US,"%.2f", cursor.getDouble(priceColumnIndex));
-        final String itemQuantity = Integer.toString(cursor.getInt(quantityColumnIndex)) + context.getString(R.string.item_count_remaining);
+        final String itemPrice = context.getString(R.string.currency_symbol, String.format(Locale.US,"%.2f", cursor.getDouble(priceColumnIndex)));
+        final String itemQuantity = context.getString(R.string.item_count_remaining, cursor.getInt(quantityColumnIndex));
 
         nameTextView.setText(itemName);
         quantityTextView.setText(itemQuantity);
@@ -69,8 +69,7 @@ public class ItemCursorAdapter extends CursorAdapter {
                 if (view.getContext().getContentResolver()
                         .update(itemUri, values, null, null) == 1) {
                     quantity.setValue(quantity.getValue()-1);
-                    quantityTextView.setText(Integer.toString(quantity.getValue())
-                            + v.getContext().getString(R.string.item_count_remaining));
+                    quantityTextView.setText(v.getContext().getString(R.string.item_count_remaining, quantity.getValue()));
                 }
 
             }
