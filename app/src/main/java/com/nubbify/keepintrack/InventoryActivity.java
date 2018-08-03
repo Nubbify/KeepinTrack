@@ -91,26 +91,26 @@ public class InventoryActivity extends AppCompatActivity {
         final EditText mItemPrice = mItemInfo.findViewById(R.id.et_add_item_price);
 
         AlertDialog dialog = new AlertDialog.Builder(c)
-                .setTitle("Add a new Item")
+                .setTitle(getString(R.string.add_item_dialog_title))
                 .setView(mItemInfo)
-                .setPositiveButton(R.string.button_add_item, new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.button_add_item), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = mItemName.getText().toString().trim();
                         String quantity = mItemQuantity.getText().toString().trim();
                         String price = mItemPrice.getText().toString().trim();
                         if (name.equals("") || quantity.equals("") || price.equals("")){
-                            Toast.makeText(InventoryActivity.this, "Item not added: please fill in all fields", Toast.LENGTH_LONG).show();
+                            Toast.makeText(InventoryActivity.this, R.string.error_fill_item_fields, Toast.LENGTH_LONG).show();
                             return;
                         }
                         try {
                             saveItem(name, quantity, price);
                         } catch (Exception e) {
-                            Toast.makeText(InventoryActivity.this, "Adding item failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(InventoryActivity.this, getString(R.string.error_add_item) + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 })
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show();
 
     }
@@ -130,6 +130,7 @@ public class InventoryActivity extends AppCompatActivity {
         } else {
             if (cursor != null && !cursor.isClosed())
                 cursor.close();
+            //We close the cursor here because we open a new one in displayDatabaseInfo.
             displayDatabaseInfo();
             Toast.makeText(this, getString(R.string.add_item_insert_success), Toast.LENGTH_LONG).show();
         }

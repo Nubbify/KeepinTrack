@@ -43,20 +43,19 @@ public class ItemCursorAdapter extends CursorAdapter {
         int priceColumnIndex = cursor.getColumnIndex(ItemEntry.COLUMN_ITEM_PRICE);
 
         final String itemName = cursor.getString(nameColumnIndex);
-        final String itemPrice = "$" + String.format(Locale.US,"%.2f", cursor.getDouble(priceColumnIndex));
-        //Because we update itemQuantity on sale, we don't want it to be final.
-        String itemQuantity = Integer.toString(cursor.getInt(quantityColumnIndex)) + " left";
+        final String itemPrice = context.getString(R.string.currency_symbol) + String.format(Locale.US,"%.2f", cursor.getDouble(priceColumnIndex));
+        final String itemQuantity = Integer.toString(cursor.getInt(quantityColumnIndex)) + context.getString(R.string.item_count_remaining);
 
         nameTextView.setText(itemName);
         quantityTextView.setText(itemQuantity);
         priceTextView.setText(itemPrice);
 
-        //On the press of the sale button, lower the quantity by one.
+
         final int id = cursor.getInt(idColumnIndex);
         //We put the quantity in a ValueContainer so we can access it and modify it from the
         //saleButton's onClickListener (as we wouldn't be able to modify it if it was just an int).
         final ValueContainer<Integer> quantity = new ValueContainer<>(cursor.getInt(quantityColumnIndex));
-
+        //On the press of the sale button, lower the quantity by one.
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +69,8 @@ public class ItemCursorAdapter extends CursorAdapter {
                 if (view.getContext().getContentResolver()
                         .update(itemUri, values, null, null) == 1) {
                     quantity.setValue(quantity.getValue()-1);
-                    quantityTextView.setText(Integer.toString(quantity.getValue()) + " left");
+                    quantityTextView.setText(Integer.toString(quantity.getValue())
+                            + v.getContext().getString(R.string.item_count_remaining));
                 }
 
             }
