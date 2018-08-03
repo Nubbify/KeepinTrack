@@ -53,7 +53,10 @@ public class ItemCursorAdapter extends CursorAdapter {
 
         //On the press of the sale button, lower the quantity by one.
         final int id = cursor.getInt(idColumnIndex);
+        //We put the quantity in a ValueContainer so we can access it and modify it from the
+        //saleButton's onClickListener (as we wouldn't be able to modify it if it was just an int).
         final ValueContainer<Integer> quantity = new ValueContainer<>(cursor.getInt(quantityColumnIndex));
+
         saleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
