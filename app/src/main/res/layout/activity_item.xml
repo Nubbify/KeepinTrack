@@ -50,19 +50,22 @@
             android:id="@+id/tv_item_name"
             android:layout_width="228dp"
             android:layout_height="47dp"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_item_price"
             android:layout_width="228dp"
             android:layout_height="47dp"
-            android:layout_below="@+id/tv_item_quantity" />
+            android:layout_below="@+id/tv_item_quantity"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_item_quantity"
             android:layout_width="71dp"
             android:layout_height="47dp"
-            android:layout_below="@+id/tv_item_name" />
+            android:layout_below="@+id/tv_item_name"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btn_update_name"
