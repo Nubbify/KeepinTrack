@@ -125,7 +125,8 @@ public class ItemActivity extends AppCompatActivity implements
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View mEditItem = LayoutInflater.from(ItemActivity.this).inflate(R.layout.edit_item_alert, null);
+                //root is null here since we can't attach it to an alertdialog that doesn't exist yet
+                View mEditItem = LayoutInflater.from(ItemActivity.this).inflate(R.layout.alert_edit_item, null);
                 final EditText mItemEditText = mEditItem.findViewById(R.id.et_edit_item);
 
                 AlertDialog.Builder editAlert = new AlertDialog.Builder(ItemActivity.this);

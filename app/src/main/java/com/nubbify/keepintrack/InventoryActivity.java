@@ -1,11 +1,8 @@
 package com.nubbify.keepintrack;
 
-import android.app.Activity;
-import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -16,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -85,7 +81,7 @@ public class InventoryActivity extends AppCompatActivity {
     private void showAddItemDialog(Context c) {
         //root here is null because we can't attach the inflated layout to a dialog that doesn't
         //exist yet.
-        View mItemInfo = LayoutInflater.from(c).inflate(R.layout.add_item_alert, null);
+        View mItemInfo = LayoutInflater.from(c).inflate(R.layout.alert_add_item, null);
         final EditText mItemName = mItemInfo.findViewById(R.id.et_add_item_name);
         final EditText mItemQuantity = mItemInfo.findViewById(R.id.et_add_item_quantity);
         final EditText mItemPrice = mItemInfo.findViewById(R.id.et_add_item_price);
