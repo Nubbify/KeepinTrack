@@ -90,7 +90,7 @@ public class InventoryActivity extends AppCompatActivity {
         final EditText mItemQuantity = mItemInfo.findViewById(R.id.et_add_item_quantity);
         final EditText mItemPrice = mItemInfo.findViewById(R.id.et_add_item_price);
 
-        AlertDialog dialog = new AlertDialog.Builder(c)
+        new AlertDialog.Builder(c)
                 .setTitle(getString(R.string.add_item_dialog_title))
                 .setView(mItemInfo)
                 .setPositiveButton(getString(R.string.button_add_item), new DialogInterface.OnClickListener() {

@@ -24,4 +24,19 @@
     <string name="currency_symbol">$%1$s</string>
     <string name="add_item_dialog_title">Add a new Item</string>
     <!-- These strings are used for the alert dialog when adding items, and related toasts -->
+
+    <string name="edit_name_alert_title">Editing Name</string>
+    <string name="edit_name_alert_hint">New item name</string>
+    <string name="edit_name_alert_button">Edit Name</string>
+    <string name="error_edit_item">Item not updated:</string>
+    <string name="error_fill_edit_fields">Item not updated: please fill in the field</string>
+    <string name="edit_price_alert_title">Editing Price</string>
+    <string name="edit_price_alert_hint">New Price</string>
+    <string name="edit_price_alert_button">Edit price</string>
+    <string name="edit_quantity_alert_title">Editing Quantity</string>
+    <string name="edit_quantity_alert_hint">New Quantity</string>
+    <string name="edit_quantity_alert_button">Edit Quantity</string>
+    <string name="edit_item_failed">Item update failed</string>
+    <string name="edit_item_success">Item updated</string>
+    <string name="delete_item_failed">Item deletion failed. Please wait a moment and try again.</string>
 </resources>

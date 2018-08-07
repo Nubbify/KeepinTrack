@@ -1,8 +1,6 @@
 package com.nubbify.keepintrack;
 
 import android.app.LoaderManager;
-import android.content.ClipData;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -233,12 +231,26 @@ public class ItemActivity extends AppCompatActivity implements
     }
 
     private void deleteItem() {
-        //TODO: Make a confirmation alert before deleting the item.
-        if (getContentResolver().delete(mCurrentItemUri, null, null) == 1) {
-            super.finish();
-        } else {
-            Toast.makeText(this, R.string.delete_item_failed, Toast.LENGTH_LONG);
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Are you sure you want to delete this?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (getContentResolver().delete(mCurrentItemUri, null, null) == 1) {
+                            finish();
+                        } else {
+                            Toast.makeText(ItemActivity.this, R.string.delete_item_failed, Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        builder.show();
     }
 
 }
